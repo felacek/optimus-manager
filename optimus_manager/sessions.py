@@ -1,7 +1,6 @@
 import dbus
 from optimus_manager.bash import exec_bash, BashError
 
-
 class SessionsError(Exception):
     pass
 
@@ -9,6 +8,12 @@ class SessionsError(Exception):
 def logout_current_desktop_session():
 
     print("Logging out the current desktop session")
+    
+    # LightDM
+    try:
+	exec_bash("sudo systemctl restart lightdm.service")
+    except BashError:
+	pass
 
     try:
         session_bus = dbus.SessionBus()
@@ -66,7 +71,6 @@ def logout_current_desktop_session():
         exec_bash("bspc quit")
     except BashError:
         pass
-
 
 def is_there_a_wayland_session():
 
