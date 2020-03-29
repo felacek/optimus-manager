@@ -11,9 +11,15 @@ def logout_current_desktop_session():
     
     # LightDM
     try:
-	exec_bash("sudo systemctl restart lightdm.service")
+        exec_bash("sudo systemctl restart lightdm.service")
     except BashError:
-	pass
+        pass
+
+    #SDDM
+    try:
+        exec_bash("sudo systemctl restart sddm.service")
+    except BashError:
+        pass
 
     try:
         session_bus = dbus.SessionBus()
